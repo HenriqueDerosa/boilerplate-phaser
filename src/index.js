@@ -1,18 +1,17 @@
 import Phaser, { Game, Scene } from 'phaser'
-import Main from '~/scenes/Main'
-import Menu from '~/scenes/Menu'
+import Boot from '~/scenes/Boot'
+import MainScene from '~/scenes/Main'
+import MenuScene from '~/scenes/Menu'
+import config from './core/config'
 
-var config = {
-  type: Phaser.AUTO,
-  width: 800,
-  height: 600,
-  physics: {
-    default: 'arcade',
-    arcade: {
-      gravity: { y: 200 },
-    },
-  },
-  scene: [Main, Menu],
+const gameConfig = Object.assign(config, {
+  scene: [Boot, MainScene, MenuScene],
+})
+
+class PhaserGame extends Phaser.Game {
+  constructor() {
+    super(gameConfig)
+  }
 }
 
-new Game(config)
+window.game = new PhaserGame()

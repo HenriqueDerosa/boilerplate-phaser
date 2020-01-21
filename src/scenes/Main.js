@@ -6,14 +6,8 @@ class MainScene extends Phaser.Scene {
   }
 
   init(data) {}
+  preload() {}
 
-  preload() {
-    this.load.setBaseURL('http://labs.phaser.io')
-
-    this.load.image('sky', 'assets/skies/space3.png')
-    this.load.image('logo', 'assets/sprites/phaser3-logo.png')
-    this.load.image('red', 'assets/particles/red.png')
-  }
   create(data) {
     this.add.image(400, 300, 'sky')
 
@@ -40,12 +34,7 @@ class MainScene extends Phaser.Scene {
       align: 'center',
     })
   }
-  update(time, delta) {
-    if (time > 3000) {
-      this.game.scene.stop(this)
-      this.game.scene.start('menu')
-    }
-  }
+  update(time, delta) {}
 }
 
 export default new MainScene({
