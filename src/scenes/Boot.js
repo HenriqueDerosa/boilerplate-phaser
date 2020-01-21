@@ -1,6 +1,7 @@
 import Phaser from 'phaser'
 
 import Loading from '~/prefab/loading/loadingBar'
+import makeAnimations from '~/animations/player'
 
 class Boot extends Phaser.Scene {
   constructor(config) {
@@ -15,16 +16,24 @@ class Boot extends Phaser.Scene {
 
     // load assets
     this.load.setBaseURL('http://labs.phaser.io')
-    this.load.image('sky', 'assets/skies/space3.png')
-    this.load.image('logo', 'assets/sprites/phaser3-logo.png')
-    this.load.image('red', 'assets/particles/red.png')
+
+    this.load.setBaseURL('https://raw.githubusercontent.com/nkholski/phaser3-es6-webpack/master/')
+    // Spritesheets with fixed sizes. Should be replaced with atlas:
+    this.load.spritesheet('mario', 'assets/images/mario-sprites.png', {
+      frameWidth: 16,
+      frameHeight: 32,
+    })
+
+    // Beginning of an atlas to replace the spritesheets above. Always use spriteatlases. I use TexturePacker to prepare them.
+    // Check rawAssets folder for the TexturePacker project I use to prepare these files.
+    this.load.atlas('mario-sprites', 'assets/mario-sprites.png', 'assets/mario-sprites.json')
   }
 
   loadNext() {
-    setTimeout(() => {
-      this.scene.start('menu')
-      this.scene.stop(this)
-    }, 1000)
+    makeAnimations(this)
+
+    this.scene.start('main')
+    this.scene.stop(this)
   }
 }
 

@@ -1,4 +1,6 @@
 import Phaser from 'phaser'
+import PlayerController from '~/player/controller'
+import InputManager from '~/core/inputManager'
 
 class MainScene extends Phaser.Scene {
   constructor(config) {
@@ -9,23 +11,17 @@ class MainScene extends Phaser.Scene {
   preload() {}
 
   create(data) {
-    this.add.image(400, 300, 'sky')
-
-    var particles = this.add.particles('red')
-
-    var emitter = particles.createEmitter({
-      speed: 100,
-      scale: { start: 1, end: 0 },
-      blendMode: 'ADD',
-    })
-
-    var logo = this.physics.add.image(100, 100, 'logo')
-
-    logo.setVelocity(100, 200)
-    logo.setBounce(1, 1)
-    logo.setCollideWorldBounds(true)
-
-    emitter.startFollow(logo)
+    this.input = new InputManager(this)
+    this.mario = new PlayerController(
+      {
+        scene: this,
+        key: 'mario',
+        x: this.sys.game.config.width / 2 - 16,
+        y: this.sys.game.config.height - 48 - 48,
+        input: this.input,
+      },
+      this.input
+    )
 
     this.add.text(0, 0, 'Welcome!', {
       fontSize: 24,
@@ -34,7 +30,11 @@ class MainScene extends Phaser.Scene {
       align: 'center',
     })
   }
-  update(time, delta) {}
+
+  update(time, delta) {
+    this.input.update()
+    this.mario.update(time, delta)
+  }
 }
 
 export default new MainScene({
