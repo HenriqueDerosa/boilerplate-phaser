@@ -10,5 +10,6 @@ export default {
       gravity: { y: 200 },
     },
   },
-  localStorageName: 'myPhaserGame',
+  localStorageName: 'PhaserGame',
+  parent: 'game',
 }

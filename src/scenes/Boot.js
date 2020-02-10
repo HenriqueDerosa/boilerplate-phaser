@@ -22,7 +22,7 @@ class Boot extends Phaser.Scene {
 
   loadNext() {
     setTimeout(() => {
-      this.scene.start('menu')
+      this.scene.start('main')
       this.scene.stop(this)
     }, 1000)
   }
